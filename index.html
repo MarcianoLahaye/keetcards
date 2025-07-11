@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeetCards - Nederlandse Kaartspellen</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>KeetCards</h1>
+           
+        </header>
+        
+
+        <main class="games-container">
+            <div class="game-card" data-game="bussen">
+                <h2>Bussen</h2>
+                <p>Het klassieke drinkkaartspel met drie fasen: voorspellen, piramide en de bus!</p>
+                <div class="game-icon">
+                    <img src="images/bus.jpeg" alt="Bus" width="240" height="240" style="border-radius: 10px;">
+                </div>
+                <button class="play-btn">Spelen</button>
+            </div>
+
+            <div class="game-card" data-game="extreem-bussen">
+                <h2>Extreem Bussen</h2>
+                <p>Een intensere versie van Bussen met extra uitdagingen!</p>
+                <div class="game-icon">
+                    <img src="images/fire.jpeg" alt="Fire" width="240" height="240" style="border-radius: 10px;">
+                </div>
+                <button class="play-btn">Spelen</button>
+            </div>
+
+            <div class="game-card" data-game="king-of-hill">
+                <h2>King of the Hill</h2>
+                <p>Strijd om de troon in dit strategische kaartspel!</p>
+                <div class="game-icon">
+                    <img src="images/king.jpeg" alt="King of the Hill" width="240" height="240" style="border-radius: 20px;">
+                </div>
+                <button class="play-btn">Spelen</button>
+            </div>
+        </main>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="game-screen hidden">
+            <div class="game-header">
+                <button id="back-btn" class="back-btn">← Terug</button>
+                <h2 id="game-title">Bussen</h2>
+            </div>
+            
+            <div id="game-content" class="game-content">
+                <!-- Game content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
