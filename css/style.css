@@ -36,6 +36,7 @@ header h1 {
     border-bottom: 3px solid #f4d03f;
     padding-bottom: 10px;
     display: inline-block;
+    cursor: pointer;
 }
 
 header p {

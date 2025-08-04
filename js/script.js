@@ -68,7 +68,8 @@ function getGameTitle(gameType) {
     const titles = {
         'bussen': 'Bussen',
         'extreem-bussen': 'Extreem Bussen',
-        'king-of-hill': 'King of the Hill'
+        'king-of-hill': 'King of the Hill',
+        'kingsen': 'Kingsen'
     };
     return titles[gameType] || 'Spel';
 }
@@ -723,6 +724,9 @@ function loadGame(gameType) {
             break;
         case 'king-of-hill':
             loadKingOfHillGame();
+            break;
+        case 'kingsen':
+            loadKingsenGame();
             break;
     }
 }
@@ -1559,6 +1563,97 @@ function restartKingOfHill() {
     startKingOfHill();
 }
 
+// Kingsen Game Implementation
+function loadKingsenGame() {
+    const gameContent = document.getElementById('game-content');
+    gameContent.innerHTML = `
+        <div class="bussen-game">
+            <div class="phase-indicator" id="phase-indicator">
+                Kingsen
+            </div>
+            
+            <div class="game-info">
+                <h3>Kingsen Spelregels</h3>
+                <p>Kingsen is een drankspel waarbij spelers om de beurt kaarten trekken en opdrachten uitvoeren op basis van de kaartwaarde.</p>
+            </div>
+            
+            <div class="kingsen-rules-container" style="max-width: 800px; margin: 0 auto;">
+                <table class="kingsen-rules-table" style="width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <thead>
+                        <tr style="background: #2c3e50; color: white;">
+                            <th style="padding: 15px; text-align: left; font-weight: bold; border-bottom: 2px solid #34495e;">Kaart</th>
+                            <th style="padding: 15px; text-align: left; font-weight: bold; border-bottom: 2px solid #34495e;">Regel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                        <tr style="background: #f8f9fa; border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #3498db;">2 ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Wijs iemand aan die moet drinken</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #e67e22;">3 ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Jij moet drinken</td>
+                        </tr>
+                        <tr style="background: #f8f9fa; border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #9b59b6;">4 ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Categorie - Noem een categorie, iedereen moet iets uit die categorie noemen</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #1abc9c;">5 ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Duimen - Laatste met de duim op tafel moet drinken</td>
+                        </tr>
+                        <tr style="background: #f8f9fa; border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #e91e63;">6 ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Drinking Buddy - Kies een buddy, jullie drinken vanaf nu altijd samen</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #ff5722;">7 ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Vloer - Laatste die de vloer aanraakt moet drinken</td>
+                        </tr>
+                        <tr style="background: #f8f9fa; border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #607d8b;">8 ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Regel - Maak een nieuwe regel die iedereen moet volgen</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #795548;">9 ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Rijm - Zeg een woord, iedereen moet erop rijmen. Wie niet kan rijmen drinkt</td>
+                        </tr>
+                        <tr style="background: #f8f9fa; border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #ff9800;">10 ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Quizmaster - Stel een vragen, niemand mag ze beantwoorden, anders drinken</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #4caf50;">Boer ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Wijzen - Wijs naar degene die jij vind die moet drinken</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #2196f3;">Vrouw ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Rise of the queens - Laatste die zijn hand omhoog steekt moet drinken</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #f44336;">Heer ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Koning van de Beker - Leg de kaart op de beker in het midden. Wie de laatste koning trekt moet drinken!</td>
+                        </tr>
+                         <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <td style="padding: 12px 15px; font-weight: bold; color: #e74c3c;">Aas ♠♥♦♣</td>
+                            <td style="padding: 12px 15px;">Waterval - Iedereen begint te drinken, je mag pas stoppen als de persoon rechts van je stopt. Hierna draait de volgorde om.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="game-controls">
+                <button class="game-btn secondary" id="back-to-menu-btn">
+                    Terug naar Menu
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('back-to-menu-btn').addEventListener('click', hideGameScreen);
+}
+
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
     // Game card click handlers
@@ -1571,6 +1666,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Back button handler
     document.getElementById('back-btn').addEventListener('click', handleBackButton);
+
+    // Title click handler
+    document.getElementById('keetcards-title').addEventListener('click', hideGameScreen);
 });
 
 function handleBackButton() {
