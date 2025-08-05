@@ -7,7 +7,14 @@ let gameState = {
     deck: [],
     predictions: [],
     pyramid: [],
-    busCards: []
+    busCards: [],
+    songs: [
+        { src: 'audio/reneehard.mp3', cover: 'images/reneehard.png', chance: 0.03 },
+        { src: 'audio/renee.mp3', cover: 'images/renee.webp', chance: 0.22 },
+        { src: 'audio/norenee.mp3', cover: 'images/norenee.png', chance: 0.75 }
+    ],
+    currentSongIndex: -1,
+    audioPlayer: new Audio()
 };
 
 // Card deck creation
@@ -56,7 +63,14 @@ function initGame(gameType) {
         deck: createDeck(),
         predictions: [],
         pyramid: [],
-        busCards: []
+        busCards: [],
+        songs: [
+            { src: 'audio/reneehard.mp3', cover: 'images/reneehard.png', chance: 0.03 },
+            { src: 'audio/renee.mp3', cover: 'images/renee.webp', chance: 0.22 },
+            { src: 'audio/norenee.mp3', cover: 'images/norenee.png', chance: 0.75 }
+        ],
+        currentSongIndex: -1,
+        audioPlayer: new Audio()
     };
     
     document.getElementById('game-title').textContent = getGameTitle(gameType);
@@ -69,7 +83,8 @@ function getGameTitle(gameType) {
         'bussen': 'Bussen',
         'extreem-bussen': 'Extreem Bussen',
         'king-of-hill': 'King of the Hill',
-        'kingsen': 'Kingsen'
+        'kingsen': 'Kingsen',
+        'rene-le-bak': 'René le Bak'
     };
     return titles[gameType] || 'Spel';
 }
@@ -727,6 +742,9 @@ function loadGame(gameType) {
             break;
         case 'kingsen':
             loadKingsenGame();
+            break;
+        case 'rene-le-bak':
+            loadReneLeBakGame();
             break;
     }
 }
@@ -1653,6 +1671,87 @@ function loadKingsenGame() {
     
     document.getElementById('back-to-menu-btn').addEventListener('click', hideGameScreen);
 }
+
+// René le Bak Game Implementation
+function loadReneLeBakGame() {
+    const gameContent = document.getElementById('game-content');
+    gameContent.innerHTML = `
+        <div class="rene-le-bak-game">
+            <div class="music-player">
+                <div class="song-cover">
+                    <img id="song-cover-img" src="images/renee.webp" alt="Song Cover">
+                </div>
+                <div class="player-controls">
+                    <button id="prev-song-btn" class="player-btn">⏮</button>
+                    <button id="play-pause-btn" class="player-btn">▶</button>
+                    <button id="next-song-btn" class="player-btn">⏭</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+    document.getElementById('next-song-btn').addEventListener('click', playNextSong);
+    document.getElementById('prev-song-btn').addEventListener('click', playPrevSong);
+}
+
+function togglePlayPause() {
+    if (gameState.audioPlayer.paused) {
+        gameState.audioPlayer.play();
+        document.getElementById('play-pause-btn').textContent = '⏸';
+    } else {
+        gameState.audioPlayer.pause();
+        document.getElementById('play-pause-btn').textContent = '▶';
+    }
+}
+
+function playNextSong() {
+    const nextButton = document.getElementById('next-song-btn');
+    nextButton.classList.add('pressed');
+    setTimeout(() => {
+        nextButton.classList.remove('pressed');
+    }, 200);
+
+    const rand = Math.random();
+    let cumulativeChance = 0;
+    let songIndex = -1;
+
+    for (let i = 0; i < gameState.songs.length; i++) {
+        cumulativeChance += gameState.songs[i].chance;
+        if (rand < cumulativeChance) {
+            songIndex = i;
+            break;
+        }
+    }
+
+    if (songIndex !== -1) {
+        gameState.currentSongIndex = songIndex;
+        playSong(songIndex);
+    }
+}
+
+function playPrevSong() {
+    if (gameState.currentSongIndex > 0) {
+        gameState.currentSongIndex--;
+        playSong(gameState.currentSongIndex);
+    }
+}
+
+function playSong(songIndex) {
+    const song = gameState.songs[songIndex];
+    const coverImage = document.getElementById('song-cover-img');
+
+    coverImage.classList.add('fade');
+
+    setTimeout(() => {
+        gameState.audioPlayer.src = song.src;
+        coverImage.src = song.cover;
+        gameState.audioPlayer.play();
+        document.getElementById('play-pause-btn').textContent = '⏸';
+        coverImage.classList.remove('fade');
+    }, 300);
+}
+
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
